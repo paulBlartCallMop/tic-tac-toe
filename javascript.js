@@ -67,3 +67,9 @@ const gameBoard = (function () {
 
     return {reset, move, update, checkWin, checkFull}
 })();
+
+function Players(player1, player2) {
+    const x = player1;
+    const o = player2;
+    return {x,o};
+}
