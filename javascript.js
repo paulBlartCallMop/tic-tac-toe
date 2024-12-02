@@ -98,13 +98,26 @@ board.addEventListener('click', (e) => {
     if (gameBoard.move(currentPlayer, currentMove)) {
         gameBoard.update();
         if (gameBoard.checkWin(currentPlayer)) {
-            message.textContent = `${currentPlayer} wins!`;
+            message.textContent = `${Players[currentPlayer]} wins!`;
             gameBoard.toggleLock();
         } else if (gameBoard.checkFull()) {
             message.textContent = 'Tie!';
             gameBoard.toggleLock();
         } else {
-            message.textContent = `${(gameBoard.getTurnCount() % 2 === 0) ? 'o':'x'}'s turn.`
+            message.textContent = `${Players[(gameBoard.getTurnCount() % 2 === 0) ? 'o':'x']}'s turn.`
         }
     }
+});
+
+const newGameButton = document.querySelector('form button');
+const player1 = document.querySelector('#player1');
+const player2 = document.querySelector('#player2');
+
+newGameButton.addEventListener('click', (e) => {
+    Players['x'] = (player1.value === '') ? 'Player 1' : player1.value;
+    Players['o'] = (player2.value === '') ? 'Player 2' : player2.value;
+    e.preventDefault();
+    gameBoard.reset();
+    gameBoard.update();
+    message.textContent = `${Players['x']}'s turn.`
 });
