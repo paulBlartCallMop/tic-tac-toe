@@ -5,8 +5,8 @@ body {
     align-items: center;
 }
 
-.container {
-    --side: 15rem;
+.board {
+    --side: 10rem;
     display: grid;
     grid-template: repeat(3,var(--side)) / repeat(3,var(--side));
 }
