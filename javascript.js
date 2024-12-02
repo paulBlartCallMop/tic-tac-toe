@@ -5,6 +5,12 @@ const gameBoard = (function () {
         board.push('');
     }
 
+    let locked = false;
+
+    const toggleLock = () => {
+        locked = !locked;
+    }
+
     let turn = 1;
 
     const reset = () => {
@@ -13,9 +19,13 @@ const gameBoard = (function () {
         }
 
         turn = 1;
+        locked = false;
     }
 
     const move = (player, slot) => {
+        if (locked) {
+            return false;
+        }
         if (board[slot] === '') {
             board[slot] = player;
             turn++;
@@ -70,7 +80,7 @@ const gameBoard = (function () {
         return turn;
     }
 
-    return {reset, move, update, checkWin, checkFull, getTurnCount}
+    return {reset, move, update, checkWin, checkFull, getTurnCount,toggleLock}
 })();
 
 let Players = {
@@ -89,8 +99,12 @@ board.addEventListener('click', (e) => {
         gameBoard.update();
         if (gameBoard.checkWin(currentPlayer)) {
             message.textContent = `${currentPlayer} wins!`;
+            gameBoard.toggleLock();
         } else if (gameBoard.checkFull()) {
             message.textContent = 'Tie!';
+            gameBoard.toggleLock();
+        } else {
+            message.textContent = `${(gameBoard.getTurnCount() % 2 === 0) ? 'o':'x'}'s turn.`
         }
     }
 });
