@@ -1,3 +1,7 @@
+:root {
+    font-family:'Courier New', Courier, monospace;
+}
+
 body {
     height: 100vh;
     display: flex;
@@ -12,7 +16,6 @@ body {
 }
 
 .tile {
-    font-family:'Courier New', Courier, monospace;
     font-size: var(--side);
     color: rgb(96, 96, 128);
     display: flex;
