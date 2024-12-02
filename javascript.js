@@ -18,6 +18,7 @@ const gameBoard = (function () {
     const move = (player, slot) => {
         if (board[slot] === '') {
             board[slot] = player;
+            turn++;
             return true;
         }
         return false;
@@ -42,17 +43,17 @@ const gameBoard = (function () {
     ]
 
     const checkWin = (player) => {
-        linesToCheck.forEach((line) => {
-            let lineIsWinning = true;
-            line.forEach((tile) => {
+        for (let index = 0; index < linesToCheck.length; index++) {
+            let isLineWinning = true;
+            linesToCheck[index].forEach((tile) => {
                 if (board[tile] != player) {
-                    lineIsWinning = false;
+                    isLineWinning = false;
                 }
             });
-            if (lineIsWinning) {
+            if (isLineWinning) {
                 return true;
             }
-        });
+        }
         return false;
     }
 
@@ -65,7 +66,11 @@ const gameBoard = (function () {
         return true;
     }
 
-    return {reset, move, update, checkWin, checkFull}
+    const getTurnCount = () => {
+        return turn;
+    }
+
+    return {reset, move, update, checkWin, checkFull, getTurnCount}
 })();
 
 let Players = {
@@ -74,3 +79,18 @@ let Players = {
 };
 
 
+const board = document.querySelector('.board');
+const message = document.querySelector('.message');
+
+board.addEventListener('click', (e) => {
+    const currentMove = parseInt(e.target.id);
+    const currentPlayer = gameBoard.getTurnCount() % 2 === 0 ? 'o' : 'x';
+    if (gameBoard.move(currentPlayer, currentMove)) {
+        gameBoard.update();
+        if (gameBoard.checkWin(currentPlayer)) {
+            message.textContent = `${currentPlayer} wins!`;
+        } else if (gameBoard.checkFull()) {
+            message.textContent = 'Tie!';
+        }
+    }
+});
