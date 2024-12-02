@@ -39,3 +39,7 @@ form button {
 button {
     font-family: 'Courier New', Courier, monospace;
 }
+
+.message {
+    text-align: center;
+}
