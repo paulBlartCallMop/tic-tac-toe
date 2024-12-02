@@ -69,8 +69,8 @@ const gameBoard = (function () {
 })();
 
 let Players = {
-    'x': 'Player 1';
-    'o': 'Player 2';
+    'x': 'Player 1',
+    'o': 'Player 2'
 };
 
 
